@@ -1,9 +1,10 @@
 <h2>Your Phone Number</h2>
 <p><%= current_user.phone.number %> <%= button_to "Change", phone_path, :method => :delete %></p>
 <% if ! current_user.phone.verified? %>
-  <%= form_tag(verify_phone_path, :method => :put) do %>
-    <%= label_tag(:verification_code, "Verification Code:") %>
-    <%= text_field_tag(:verification_code) %>
+  <%= form_tag(verify_phone_path, :method => :get) do %>
+    <%= label_tag(:code, "Verification Code:") %>
+    <%= text_field_tag(:code) %>
     <%= submit_tag("Verify!") %>
   <% end %>
+  <%= button_to "Resend Code", resend_code_phone_path %></p>
 <% end %>
