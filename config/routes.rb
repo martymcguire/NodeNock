@@ -1,5 +1,9 @@
 Nodenock::Application.routes.draw do
-  resources :users
+  resource :phone do
+    put 'verify'
+  end
+
+  resource :user
   root :to => "users#show"
 
   match "/auth/:provider/callback" => "sessions#create"

@@ -3,6 +3,11 @@
 <% if current_user %>
   Welcome <%= current_user.name %>!
   <%= link_to "Sign Out", signout_path %>
+  <% if current_user.phone.nil? %>
+    <%= render :partial => "phones/edit" %>
+  <% else %>
+    <%= render :partial => "phones/show" %>
+  <% end %>
 <% else %>
   <%= link_to "Sign in with Foursquare", "/auth/foursquare" %>
 <% end %>

@@ -1,0 +1,8 @@
+<h2>Register Your Phone!</h2>
+
+<%= form_tag(phone_path) do %>
+  <%= label_tag 'phone[number]', "Your Phone Number:" %>
+  <%= text_field_tag 'phone[number]' %>
+
+  <%= submit_tag "Confirm!" %>
+<% end %>
