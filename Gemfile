@@ -7,8 +7,11 @@ gem 'rails', '3.0.3'
 
 group :development, :test do
   gem 'sqlite3-ruby', :require => 'sqlite3'
+  gem 'nifty-generators'
 end
 
+gem 'multi_json' # req for omniauth
+gem 'omniauth'
 gem 'twilio'
 
 # Use unicorn as the web server
@@ -33,3 +36,4 @@ gem 'twilio'
 # group :development, :test do
 #   gem 'webrat'
 # end
+gem "mocha", :group => :test
