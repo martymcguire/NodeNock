@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(:version => 20110112235920) do
   create_table "calls", :force => true do |t|
     t.string   "from"
     t.integer  "user_id"
+    t.string   "sid"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

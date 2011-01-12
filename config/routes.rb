@@ -1,4 +1,8 @@
 Nodenock::Application.routes.draw do
+  resources :calls do
+    post "dial_out", :on => :member
+  end
+
   resource :phone do
     match "verify(/:code)" => "phones#verify", :as => :verify
     post "resend_code"
