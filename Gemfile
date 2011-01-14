@@ -13,6 +13,7 @@ end
 gem 'multi_json' # req for omniauth
 gem 'omniauth'
 gem 'twilio'
+gem 'foursquare'
 
 # Use unicorn as the web server
 # gem 'unicorn'
