@@ -1,19 +1,41 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
-    <%= stylesheet_link_tag "application" %>
-    <%= javascript_include_tag :defaults %>
+    <title><%= content_for?(:title) ? yield(:title) : "NodeNock" %></title>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css" />
+    <script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js"></script>
     <%= csrf_meta_tag %>
+    <style>
+      .ui-icon-phone { background: url('/images/phone_icon.png'); }
+      .ui-icon-foursquare { background: url('/images/foursquare_icon.png'); }
+    </style>
     <%= yield(:head) %>
   </head>
   <body>
-    <div id="container">
-      <% flash.each do |name, msg| %>
-        <%= content_tag :div, msg, :id => "flash_#{name}" %>
+    <div data-role="page" data-theme="a">
+      <div data-role="header">
+        <%= content_tag :h1, yield(:title) if show_title? %>
+        <% if current_user %>
+          <%= link_to "Sign Out", signout_path, 'data-role' => 'button', "class" => "ui-btn-right", 'data-icon' => 'delete', 'rel' => 'external' %>
+        <% end %>
+      </div><!-- /header -->
+
+      <% if ! flash.empty? %>
+        <div class='ui-bar ui-bar-c'>
+          <% flash.each do |name, msg| %>
+            <%= content_tag :div, msg, :id => "flash_#{name}" %>
+          <% end %>
+        </div>
       <% end %>
-      <%= content_tag :h1, yield(:title) if show_title? %>
-      <%= yield %>
-    </div>
+
+      <div data-role="content"> 
+        <%= yield %>
+      </div><!-- /content -->
+
+      <div data-role="footer">
+        <!-- PUT A FOOTER HERE? -->
+      </div><!-- /footer -->
+    </div><!-- /page -->
   </body>
 </html>

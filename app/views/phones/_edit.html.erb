@@ -1,8 +1,5 @@
-<h2>Register Your Phone!</h2>
-
 <%= form_tag(phone_path) do %>
-  <%= label_tag 'phone[number]', "Your Phone Number:" %>
+  <%= label_tag 'phone[number]', "Register your phone:"%>
   <%= text_field_tag 'phone[number]' %>
-
-  <%= submit_tag "Confirm!" %>
+  <%= submit_tag "Confirm!", 'data-inline' => 'true' %>
 <% end %>
