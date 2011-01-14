@@ -7,7 +7,8 @@ class PhonesController < ApplicationController
   end
 
   def verify
-    p = Phone.find_by_user_id_and_verification_code(current_user.id,params[:code])
+    code = params[:code] ? params[:code].upcase : nil
+    p = Phone.find_by_user_id_and_verification_code(current_user.id,code)
     if(p)
       p.verification_code = nil
       p.save!
