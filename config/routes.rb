@@ -5,7 +5,7 @@ Nodenock::Application.routes.draw do
 
   resource :phone do
     match "verify(/:code)" => "phones#verify", :as => :verify
-    post "resend_code"
+    get "resend_code"
   end
 
   resource :user

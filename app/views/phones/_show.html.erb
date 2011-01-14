@@ -1,19 +1,24 @@
-<div class="ui-grid-b">
-  <div class="ui-block-a">
-    <h3>Your Phone Number:</h3>
-  </div>
-  <div class="ui-block-b">
-    <p><%= current_user.phone.number %></p>
-  </div>
-  <div class="ui-block-c">
-    <%= button_to "Change", phone_path, :method => :delete, 'data-inline' => 'true' %>
-  </div>
-</div>
+<div>Your Phone Number:</div>
+<div align='center'><h3><%= current_user.phone.number %></h3></div>
+<%= button_to "Change", phone_path, :method => :delete %>
 <% if ! current_user.phone.verified? %>
-  <%= form_tag(verify_phone_path, :method => :get) do %>
+  <%= form_tag(verify_phone_path, :method => :get, 'data-inline' => 'true') do %>
     <%= label_tag(:code, "Verification Code:") %>
     <%= text_field_tag(:code) %>
-    <%= submit_tag("Verify!",'data-inline' => 'true') %>
+    <div data-role="controlgroup" data-type="horizontal" align="right">
+      <%= link_to("Resend", resend_code_phone_path, 'data-role' => 'button') %>
+      <%= submit_tag("Verify Me!", 'data-theme' => 'b') %>
+    </div>
   <% end %>
-  <%= button_to "Resend Code", resend_code_phone_path %></p>
+  <script>
+    $('input#resend_code').click(
+      function(){
+        var frm = $('input#resend_code')[0].form;
+        form.action = "<%= resend_code_phone_path %>";
+        form.method = "POST";
+        form.submit();
+        return true;
+      }
+    );
+  </script>
 <% end %>

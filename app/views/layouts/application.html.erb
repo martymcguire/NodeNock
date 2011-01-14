@@ -4,6 +4,12 @@
     <title><%= content_for?(:title) ? yield(:title) : "NodeNock" %></title>
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css" />
     <script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+    <script>
+      $(document).bind("mobileinit", function(){
+        $.mobile.ajaxFormsEnabled = false;
+        $.mobile.ajaxLinksEnabled = false;
+      });
+    </script>
     <script src="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js"></script>
     <%= csrf_meta_tag %>
     <style>

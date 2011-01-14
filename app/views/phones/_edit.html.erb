@@ -1,5 +1,5 @@
-<%= form_tag(phone_path) do %>
+<%= form_tag(phone_path, 'rel' => 'external') do %>
   <%= label_tag 'phone[number]', "Register your phone:"%>
   <%= text_field_tag 'phone[number]' %>
-  <%= submit_tag "Confirm!", 'data-inline' => 'true' %>
+  <%= submit_tag "Confirm!" %>
 <% end %>
