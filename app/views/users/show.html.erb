@@ -5,7 +5,7 @@
     Welcome, <%= current_user.name %>!
   <% end %>
 
-<a rel="external" href="tel:<%= ENV['NODENOCK_PHONE']%>" data-icon="phone" data-role="button" data-theme="b">Call Now!</a>
+<a rel="external" href="tel:<%= ENV['NODENOCK_PHONE']%>" data-icon="phone" data-role="button" data-theme="b">Call to Get In!</a>
 
   <% if current_user %>
     <% if current_user.phone.nil? %>
