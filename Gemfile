@@ -11,7 +11,7 @@ group :development, :test do
 end
 
 gem 'multi_json' # req for omniauth
-gem 'omniauth'
+gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git' # ~0.2.0.beta2
 gem 'twilio'
 gem 'foursquare'
 
