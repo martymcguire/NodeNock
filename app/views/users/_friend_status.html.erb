@@ -1,0 +1,11 @@
+<% if(current_user.friendship_waiting_on_them?) %>
+  <div id="friend_status" class="ui-bar ui-bar-a">
+    You need to approve us as a friend before we can see if you're checked in.
+  </div>
+  <%= link_to "Approve Friendship", "http://foursquare.com/manage/requests", 'data-role' => 'button', 'rel' => 'external' %>
+<% elsif(current_user.is_stranger?) %>
+  <div id="friend_status" class="ui-bar ui-bar-a">
+    You need to friend 'Baltimore Node' on Foursquare before we can see if you're checked in.
+  </div>
+  <%= link_to "Friend Baltimore Node", "http://foursquare.com/manage/requests", 'data-role' => 'button', 'rel' => 'external' %>
+<% end %>

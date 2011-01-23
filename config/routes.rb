@@ -8,7 +8,9 @@ Nodenock::Application.routes.draw do
     get "resend_code"
   end
 
-  resource :user
+  resource :user do
+    post "approve_friendship"
+  end
   root :to => "users#show"
 
   match "/auth/:provider/callback" => "sessions#create"

@@ -8,6 +8,7 @@
 <a rel="external" href="tel:<%= ENV['NODENOCK_PHONE']%>" data-icon="phone" data-role="button" data-theme="b">Call to Get In!</a>
 
   <% if current_user %>
+    <%= render :partial => "users/friend_status" %>
     <% if current_user.phone.nil? %>
       <%= render :partial => "phones/edit" %>
     <% else %>
