@@ -11,6 +11,11 @@
       $(document).bind("mobileinit", function(){
         $.mobile.ajaxFormsEnabled = false;
         $.mobile.ajaxLinksEnabled = false;
+        setTimeout(
+          function(){
+            $('div#flash').slideUp();
+          },
+        5000);
       });
     </script>
     <script src="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js"></script>
@@ -21,7 +26,7 @@
       div#logo { margin: 0 auto; margin-bottom: 10px; width: 70%; }
       div#logo img { width: 100%; }
     </style>
-    <%= yield(:head) %>
+   <%= yield(:head) %>
   </head>
   <body>
     <div data-role="page" data-theme="a">
@@ -33,7 +38,7 @@
       </div><!-- /header -->
 
       <% if ! flash.empty? %>
-        <div class='ui-bar ui-bar-c'>
+        <div id='flash' class='ui-bar ui-bar-c'>
           <% flash.each do |name, msg| %>
             <%= content_tag :div, msg, :id => "flash_#{name}" %>
           <% end %>
