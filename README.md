@@ -1,8 +1,8 @@
 NodeNock - A Call-to-Get-In System Powered by Twilio and Foursquare
 ===================================================================
 
-NodeNock is a web application that lets people inside a locked location receive
-phone calls from people outside. Here's how it works:
+NodeNock is a Rails 3 application for mobile devices that lets people inside a
+locked location receive phone calls from people outside. Here's how it works:
 
 One-Time Setup
 --------------
@@ -16,6 +16,22 @@ Regular Use
 inside.
 * Folks who are outside call the phone number and are connected to one of the
 people who are checked in.
+
+---
+
+Technology!
+===========
+
+There are a lot of cool services and libraries that come together to make
+NodeNock work. Here are some of the notables:
+
+* [Twilio](http://twilio.com/) - Provides a phone number to call and handles
+interacting with callers.
+* [Foursquare](http://foursquare.com/) - Provides info about who is inside.
+* [jQuery Mobile](http://jquerymobile.com/) - Makes pretty mobile web apps.
+* [Rails 3](http://rubyonrails.org/) - Makes awesome web apps!
+* [Omniauth](https://github.com/intridea/omniauth) - Makes logging in via
+Foursquare look easy.
 
 ---
 
