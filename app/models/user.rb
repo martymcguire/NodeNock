@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   end
 
   def send_friend_request
-    foursquare.friend_sendrequest(:uid => self['uid'])
+    foursquare.user_friend_request(self['uid'])
   end
 
   def friendship_waiting_on_me?
@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
   end
 
   def approve_user_request
-    foursquare.friend_approve(:uid => self['uid'])
+    foursquare.user_approve_friend(self['uid'])
   end
 
   def friendship_waiting_on_them?
@@ -61,10 +61,11 @@ class User < ActiveRecord::Base
 
   def approve_venue_request
     # Make connection using this user's creds instead of the venue user's.
-    oauth = Foursquare::OAuth.new(ENV['FOURSQUARE_CONSUMER_KEY'],ENV['FOURSQUARE_CONSUMER_SECRET'])
-    oauth.authorize_from_access(self.oauth_token,self.oauth_secret)
-    fsq = Foursquare::Base.new(oauth)
-    fsq.friend_approve(ENV['NODENOCK_VENUE_USER_ID'])
+    # FIXME: are we saving self.oauth_secret anymore? What is FS sending?
+    fsq = Foursquare2::Client.new(
+      :oauth_token => (self.oauth_secret ? self.oauth_secret : self.oauth_token)
+    )
+    fsq.user_approve_friend(ENV['NODENOCK_VENUE_USER_ID'])
   end
 
   def is_venue_user?
@@ -73,9 +74,12 @@ class User < ActiveRecord::Base
 
   def friend_status
     return @friend_status if @friend_status
-    friends_hash = foursquare.friends.select{|f| f['id'] == self['uid']}
-    if(! friends_hash.empty?)
-      @friend_status = friends_hash[0]['friendstatus']
+    friends = foursquare.user_friends('self')
+    if(friends.items)
+      friends_hash = friends.items.select{|f| f['id'] == self['uid']}
+      if(! friends_hash.empty?)
+        @friend_status = friends_hash[0]['relationship']
+      end
     else
       @friend_status = 'stranger'
     end
@@ -85,8 +89,6 @@ class User < ActiveRecord::Base
 
   def foursquare
     return @foursquare if @foursquare
-    oauth = Foursquare::OAuth.new(ENV['FOURSQUARE_CONSUMER_KEY'],ENV['FOURSQUARE_CONSUMER_SECRET'])
-    oauth.authorize_from_access(ENV['NODENOCK_VENUE_USER_TOKEN'],ENV['NODENOCK_VENUE_USER_SECRET'])
-    @foursquare = Foursquare::Base.new(oauth)
+    @foursquare = Foursquare2::Client.new(:oauth_token => ENV['NODENOCK_VENUE_USER_SECRET'])
   end
 end

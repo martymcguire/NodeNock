@@ -23,16 +23,14 @@ class CallsController < ApplicationController
     call = Call.find_by_sid(params['CallSid'])
     user = call.user
     # set these in your environment
-    oauth = Foursquare::OAuth.new(ENV['FOURSQUARE_CONSUMER_KEY'], ENV['FOURSQUARE_CONSUMER_SECRET'])
-    oauth.authorize_from_access(ENV['NODENOCK_VENUE_USER_TOKEN'], ENV['NODENOCK_VENUE_USER_SECRET'])
-    foursquare = Foursquare::Base.new(oauth)
-    venue = foursquare.venue :vid => ENV['NODENOCK_VENUE_ID']
+    foursquare = Foursquare2::Client.new(:oauth_token => ENV['NODENOCK_VENUE_USER_SECRET'])
+    venue = foursquare.venue(ENV['NODENOCK_VENUE_ID'])
 
-    if(! venue['checkins'])
+    if(venue['hereNow']['count'] == 0)
       render :text => Twilio::Verb.say("Sorry, it looks like no one is checked in. Please try again later. Goodbye!", :voice => 'woman')
       return
     else
-      number = number_from_checkins(venue['checkins'], params['From'].gsub(/ /,'+'))
+      number = number_from_checkins(venue['hereNow'], params['From'].gsub(/ /,'+'))
       if(number)
         verb = Twilio::Verb.new do |v|
           v.say "Dialing.", :voice => 'woman'
@@ -49,12 +47,15 @@ class CallsController < ApplicationController
 private
 
   def number_from_checkins(checkins, caller_num)
-    checkins.each do |c|
-      fsu = c['user']
-      u = User.find_by_uid(fsu['id'])
-      if(u && u.phone.verified?)
-        next if u.phone.number == caller_num # don't call ourselves
-        return u.phone.number
+    checkins.groups.each do |g|
+      g.items.each do |c|
+        # FIXME: don't know what this structure looks like
+        fsu = c['user']
+        u = User.find_by_uid(fsu['id'])
+        if(u && u.phone.verified?)
+          next if u.phone.number == caller_num # don't call ourselves
+          return u.phone.number
+        end
       end
     end
     return nil
