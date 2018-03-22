@@ -4,6 +4,11 @@ NodeNock - A Call-to-Get-In System Powered by Twilio and Foursquare
 NodeNock is a Rails 3 application for mobile devices that lets people inside a
 locked location receive phone calls from people outside. Here's how it works:
 
+Deprecated
+----------
+
+**NOTE: This application is extremely out of date. It might be useful for someone building a similar system, today, but should *not* be used as-is. No support is provided.**
+
 One-Time Setup
 --------------
 * Users go through a one-time registration process by logging in with their 
